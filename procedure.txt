@@ -1,0 +1,5 @@
+Procedure:
+    1. Get the input url
+    2. Create a short url for the input
+    3. Add the short and original url into a database
+    4. Take care of collisions in the database
