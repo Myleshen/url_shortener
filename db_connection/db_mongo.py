@@ -1,18 +1,21 @@
+from typing import Collection
 import pymongo
 
 
-class Db:
-    def __init__(self) -> None:
-        self.collection = self.connection()
+class DB_Mongo:
+    def __init__(self, prod=False) -> None:
+        self.collection = self.__connection(prod)
 
-    def connection(self):
+    def __connection(self, prod=False) -> Collection:
         connection = pymongo.MongoClient("mongodb://localhost:27017")
-        database = connection.get_database("anime_tracker")
-        return database.get_collection("testing")
+        database = connection.get_database("url_shortner")
+        if prod:
+            return database.get_collection("prod")
+        return database.get_collection("test")
 
-    def add_entry(self, entry):
-        try:
-            self.collection.insert_one(entry)
-            return "Added data successfully"
-        except:
-            return "Failed to add the data"
+    def add_entry(self, entry) -> str:
+        self.collection.insert_one(entry)
+        return "Added data successfully"
+
+    def list_entries(self) -> list:
+        return [index for index in self.collection.find({})]
