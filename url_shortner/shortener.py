@@ -23,3 +23,6 @@ class Shortener:
 
     def list_urls_in_db(self):
         return self.db_conn.list_all()
+
+    def get_original_url(self, short_url):
+        return self.db_conn.get_url(short_url)

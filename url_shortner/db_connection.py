@@ -10,3 +10,6 @@ class DB_Connection:
 
     def list_all(self) -> list:
         return self.conn.list_entries()
+
+    def get_url(self, short_url):
+        return self.conn.get_long_url(short_url)

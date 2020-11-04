@@ -19,3 +19,7 @@ class DB_Mongo:
 
     def list_entries(self) -> list:
         return [index for index in self.collection.find({})]
+
+    def get_long_url(self, short_url) -> str:
+        query = {"created_url": short_url}
+        return self.collection.find_one(query)
