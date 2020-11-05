@@ -1,5 +1,6 @@
 from typing import Collection
 import pymongo
+import sys
 
 
 class DB_Mongo:
@@ -18,8 +19,20 @@ class DB_Mongo:
         return "Added data successfully"
 
     def list_entries(self) -> list:
-        return [index for index in self.collection.find({})]
+        return [
+            {"OriginalURL": index["original_url"], "ShortURL": index["created_url"]}
+            for index in self.collection.find({})
+        ]
 
     def get_long_url(self, short_url) -> str:
-        query = {"created_url": short_url}
-        return self.collection.find_one(query)
+        query = {}
+        if len(short_url) < 8:
+            query = {"created_url": {"$regex": f".*{short_url}.*"}}
+        else:
+            query = {"created_url": short_url}
+        try:
+            query_dict = self.collection.find_one(query)
+            return query_dict.get("original_url")
+        except AttributeError:
+            print(f"Error: The link that has been provided is not available..Exiting")
+            sys.exit()
