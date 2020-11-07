@@ -5,7 +5,7 @@ description = ""
 authors = ["Myleshen Praburam <mylesuge@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "3.9.0"
 fastapi = "^0.61.1"
 uvicorn = "^0.12.2"
 pymongo = "^3.11.0"
