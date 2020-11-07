@@ -10,7 +10,7 @@ class Shortener:
 
     def create_unique_url(self, long_url: str):
         short_url = self.util.md5(long_url)
-        short_url = f"www.sample.in/{short_url[:7]}"
+        short_url = short_url[:7]
         self._add_to_db(long_url, short_url)
         return short_url
 

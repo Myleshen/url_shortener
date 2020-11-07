@@ -1,6 +1,9 @@
 from typing import Collection
 import pymongo
 import sys
+import os
+
+MONGO_URL = os.environ["mongo_url"]
 
 
 class DB_Mongo:
@@ -8,7 +11,7 @@ class DB_Mongo:
         self.collection = self.__connection(prod)
 
     def __connection(self, prod=False) -> Collection:
-        connection = pymongo.MongoClient("mongodb://localhost:27017")
+        connection = pymongo.MongoClient(MONGO_URL)
         database = connection.get_database("url_shortner")
         if prod:
             return database.get_collection("prod")
