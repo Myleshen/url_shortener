@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from url_shortner.shortener import Shortener
 from payloads_post.URLModel import URL
 from starlette.responses import RedirectResponse
+import uvicorn
 
 app = FastAPI()
 shortener = Shortener()
@@ -22,3 +23,7 @@ async def list_urls():
 async def get_short_url(q: str):
     url = shortener.get_original_url(q)
     return RedirectResponse(url=url)
+
+
+if __name__ == "__main__":
+    uvicorn.run("server.app:app", host="0.0.0.0", port=8000, reload=True)
